@@ -10,10 +10,8 @@ const {
 } = require('../controllers/expenseController');
 const { protect } = require('../middleware/auth');
 
-// Protect all routes
 router.use(protect);
 
-// Summary route must come before /:id
 router.get('/summary/stats', getSummary);
 
 router.route('/')

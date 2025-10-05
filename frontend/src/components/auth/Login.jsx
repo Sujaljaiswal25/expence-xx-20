@@ -26,7 +26,6 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
-    // Validation
     if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
       return;
@@ -78,7 +77,7 @@ const Login = () => {
         <div className="bg-white rounded-2xl shadow-xl p-8 space-y-6 animate-fadeIn">
           <ErrorMessage message={error} onClose={() => setError("")} />
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
@@ -88,7 +87,7 @@ const Login = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-base"
                 placeholder="Enter your email"
               />
             </div>
@@ -102,7 +101,7 @@ const Login = () => {
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                className="w-full px-3 sm:px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-base"
                 placeholder="Enter your password"
               />
             </div>

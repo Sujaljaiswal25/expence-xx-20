@@ -1,6 +1,29 @@
 @import "tailwindcss";
 
-/* Custom animations for enhanced UX */
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  touch-action: manipulation;
+}
+
+@media (max-width: 640px) {
+  button, input, select, textarea {
+    font-size: 16px; 
+  }
+  
+
+  button, .btn, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
@@ -19,7 +42,6 @@
   animation: slideIn 0.4s ease-out;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -35,4 +57,14 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+@media (max-width: 640px) {
+  .recharts-wrapper {
+    font-size: 12px;
+  }
+  
+  .recharts-pie-label-text {
+    font-size: 10px;
+  }
 }

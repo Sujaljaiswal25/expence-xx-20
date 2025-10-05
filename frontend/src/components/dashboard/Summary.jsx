@@ -64,22 +64,22 @@ const Summary = () => {
   }));
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 sm:space-y-8">
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 animate-fadeIn">
-        <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 animate-fadeIn">
+        <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm font-medium text-blue-100 mb-2">
+              <h3 className="text-xs sm:text-sm font-medium text-blue-100 mb-1 sm:mb-2">
                 Total Spent
               </h3>
-              <p className="text-3xl font-bold">
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold">
                 {formatCurrency(summary.totalSpent)}
               </p>
             </div>
-            <div className="h-12 w-12 bg-blue-400 rounded-lg flex items-center justify-center">
+            <div className="h-10 w-10 sm:h-12 sm:w-12 bg-blue-400 rounded-lg flex items-center justify-center">
               <svg
-                className="w-6 h-6"
+                className="w-5 h-5 sm:w-6 sm:h-6"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -95,7 +95,7 @@ const Summary = () => {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
+        <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
           <div className="flex items-center justify-between">
             <div>
               <h3 className="text-sm font-medium text-green-100 mb-2">
@@ -181,14 +181,14 @@ const Summary = () => {
       </div>
 
       {/* Charts */}
-      <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
         {/* Category Breakdown - Pie Chart */}
         {categoryData.length > 0 && (
-          <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
-            <h3 className="text-xl font-semibold text-gray-900 mb-6">
+          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-900 mb-4 sm:mb-6">
               Expenses by Category
             </h3>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250}>
               <PieChart>
                 <Pie
                   data={categoryData}
@@ -215,7 +215,6 @@ const Summary = () => {
           </div>
         )}
 
-        {/* Monthly Trend - Bar Chart */}
         {monthlyData.length > 0 && (
           <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
             <h3 className="text-xl font-semibold text-gray-900 mb-6">
@@ -234,7 +233,6 @@ const Summary = () => {
         )}
       </div>
 
-      {/* Top Categories */}
       {summary.categoryBreakdown.length > 0 && (
         <div className="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-200">
           <h3 className="text-xl font-semibold text-gray-900 mb-6">

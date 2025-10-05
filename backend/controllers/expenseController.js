@@ -1,14 +1,11 @@
 const Expense = require('../models/Expense');
 const { CATEGORIES } = require('../utils/constants');
 
-// @desc    Get all expenses
-// @route   GET /api/expenses
-// @access  Private
+
 const getExpenses = async (req, res) => {
   try {
     const { category, startDate, endDate } = req.query;
     
-    // Build query
     let query = { user: req.user._id };
 
     if (category) {
@@ -37,9 +34,6 @@ const getExpenses = async (req, res) => {
   }
 };
 
-// @desc    Get single expense
-// @route   GET /api/expenses/:id
-// @access  Private
 const getExpense = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -48,7 +42,6 @@ const getExpense = async (req, res) => {
       return res.status(404).json({ message: 'Expense not found' });
     }
 
-    // Make sure user owns expense
     if (expense.user.toString() !== req.user._id.toString()) {
       return res.status(401).json({ message: 'Not authorized' });
     }
@@ -59,14 +52,11 @@ const getExpense = async (req, res) => {
   }
 };
 
-// @desc    Create expense
-// @route   POST /api/expenses
-// @access  Private
+
 const createExpense = async (req, res) => {
   try {
     const { amount, category, date, note } = req.body;
 
-    // Validation
     if (!amount || !category || !date) {
       return res.status(400).json({ message: 'Please provide amount, category, and date' });
     }
@@ -89,9 +79,6 @@ const createExpense = async (req, res) => {
   }
 };
 
-// @desc    Update expense
-// @route   PUT /api/expenses/:id
-// @access  Private
 const updateExpense = async (req, res) => {
   try {
     let expense = await Expense.findById(req.params.id);
@@ -100,12 +87,10 @@ const updateExpense = async (req, res) => {
       return res.status(404).json({ message: 'Expense not found' });
     }
 
-    // Make sure user owns expense
     if (expense.user.toString() !== req.user._id.toString()) {
       return res.status(401).json({ message: 'Not authorized' });
     }
 
-    // Validate category if provided
     if (req.body.category && !CATEGORIES.includes(req.body.category)) {
       return res.status(400).json({ message: 'Invalid category' });
     }
@@ -122,9 +107,7 @@ const updateExpense = async (req, res) => {
   }
 };
 
-// @desc    Delete expense
-// @route   DELETE /api/expenses/:id
-// @access  Private
+
 const deleteExpense = async (req, res) => {
   try {
     const expense = await Expense.findById(req.params.id);
@@ -133,7 +116,6 @@ const deleteExpense = async (req, res) => {
       return res.status(404).json({ message: 'Expense not found' });
     }
 
-    // Make sure user owns expense
     if (expense.user.toString() !== req.user._id.toString()) {
       return res.status(401).json({ message: 'Not authorized' });
     }
@@ -146,14 +128,11 @@ const deleteExpense = async (req, res) => {
   }
 };
 
-// @desc    Get expense summary
-// @route   GET /api/expenses/summary/stats
-// @access  Private
+
 const getSummary = async (req, res) => {
   try {
     const { startDate, endDate } = req.query;
 
-    // Build match query
     let matchQuery = { user: req.user._id };
     
     if (startDate || endDate) {
@@ -162,21 +141,18 @@ const getSummary = async (req, res) => {
       if (endDate) matchQuery.date.$lte = new Date(endDate);
     }
 
-    // Total spent
     const totalResult = await Expense.aggregate([
       { $match: matchQuery },
       { $group: { _id: null, total: { $sum: '$amount' } } }
     ]);
     const totalSpent = totalResult[0]?.total || 0;
 
-    // Category breakdown
     const categoryBreakdown = await Expense.aggregate([
       { $match: matchQuery },
       { $group: { _id: '$category', total: { $sum: '$amount' }, count: { $sum: 1 } } },
       { $sort: { total: -1 } }
     ]);
 
-    // Monthly breakdown (last 6 months)
     const sixMonthsAgo = new Date();
     sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
     
@@ -195,7 +171,6 @@ const getSummary = async (req, res) => {
       { $sort: { '_id.year': 1, '_id.month': 1 } }
     ]);
 
-    // Transaction count
     const transactionCount = await Expense.countDocuments(matchQuery);
 
     res.json({

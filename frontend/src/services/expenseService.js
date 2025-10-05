@@ -1,6 +1,5 @@
 import api from './api';
 
-// Auth services
 export const register = async (userData) => {
   const response = await api.post('/auth/register', userData);
   if (response.data.token) {
@@ -29,7 +28,6 @@ export const getCurrentUser = async () => {
   return response.data;
 };
 
-// Expense services
 export const getExpenses = async (filters = {}) => {
   const params = new URLSearchParams();
   if (filters.category) params.append('category', filters.category);

@@ -59,12 +59,12 @@ const ExpenseForm = ({ onSubmit, editingExpense, onCancel }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 mb-8 animate-fadeIn">
-      <div className="flex items-center justify-between mb-6">
-        <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-          <div className="h-8 w-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mr-3">
+    <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8 animate-fadeIn">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-900 flex items-center">
+          <div className="h-6 w-6 sm:h-8 sm:w-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center mr-2 sm:mr-3">
             <svg
-              className="w-5 h-5 text-white"
+              className="w-3 h-3 sm:w-5 sm:h-5 text-white"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -77,15 +77,17 @@ const ExpenseForm = ({ onSubmit, editingExpense, onCancel }) => {
               />
             </svg>
           </div>
-          {editingExpense ? "Edit Expense" : "Add New Expense"}
+          <span className="text-base sm:text-xl">
+            {editingExpense ? "Edit Expense" : "Add New Expense"}
+          </span>
         </h3>
       </div>
 
       <ErrorMessage message={error} onClose={() => setError("")} />
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
+      <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="sm:col-span-2 lg:col-span-1">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               Amount <span className="text-red-500">*</span>
             </label>
@@ -101,7 +103,7 @@ const ExpenseForm = ({ onSubmit, editingExpense, onCancel }) => {
                 step="0.01"
                 min="0.01"
                 placeholder="0.00"
-                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 text-base"
               />
             </div>
           </div>
@@ -114,7 +116,7 @@ const ExpenseForm = ({ onSubmit, editingExpense, onCancel }) => {
               name="category"
               value={formData.category}
               onChange={handleChange}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200 bg-white text-base"
             >
               <option value="">Select Category</option>
               {CATEGORIES.map((cat) => (
