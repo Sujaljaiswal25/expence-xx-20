@@ -1,7 +1,9 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const connectDB = require('./config/db');
+const express = require("express");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const path = require("path");
+const publicPath = path.join(__dirname, "../public");
 
 // Load env vars
 dotenv.config();
@@ -15,14 +17,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(publicPath));
 
 // Routes
-app.use('/api/auth', require('./routes/auth'));
-app.use('/api/expenses', require('./routes/expenses'));
+app.use("/api/auth", require("./routes/auth"));
+app.use("/api/expenses", require("./routes/expenses"));
 
-// Health check
-app.get('/', (req, res) => {
-  res.json({ message: 'Expense Tracker API is running' });
+// Health check for API
+app.get("/api/health", (req, res) => {
+  res.json({ message: "Expense Tracker API is running" });
 });
 
 // Error handler
@@ -31,8 +34,13 @@ app.use((err, req, res, next) => {
   res.status(statusCode);
   res.json({
     message: err.message,
-    stack: process.env.NODE_ENV === 'production' ? null : err.stack
+    stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
+});
+
+// Serve frontend for all non-API routes (must be last)
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 const PORT = process.env.PORT || 5000;

@@ -12,4 +12,4 @@ export const CATEGORIES = [
   'Other'
 ];
 
-export const API_URL = `http://localhost:5000/api`;
+export const API_URL = `https://expence-xx-20.onrender.com/api`;
