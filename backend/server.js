@@ -3,10 +3,14 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const path = require("path");
-const publicPath = path.join(__dirname, "../public");
 
 // Load env vars
 dotenv.config();
+
+// Set the public path based on environment
+const publicPath = process.env.NODE_ENV === 'production' 
+  ? path.join(__dirname, 'public')  // In production, build files should be in backend/public
+  : path.join(__dirname, "../public");  // In development, use ../public
 
 // Connect to database
 connectDB();
@@ -40,7 +44,10 @@ app.use((err, req, res, next) => {
 
 // Serve frontend for all non-API routes (must be last)
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+  const indexPath = process.env.NODE_ENV === 'production' 
+    ? path.join(__dirname, 'public', 'index.html')
+    : path.join(__dirname, "../public/index.html");
+  res.sendFile(indexPath);
 });
 
 const PORT = process.env.PORT || 5000;
